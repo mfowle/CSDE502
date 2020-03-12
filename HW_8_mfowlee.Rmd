@@ -1,0 +1,64 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+---
+title: "CSDE 502 Assignment 8"
+author: '[Matt Fowle](mailto:mfowle@uw.edu)'
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Longitudinal Analysis of the United Kingdom's Life Expectancy at Birth 1922-2016
+
+The United Kingdom of Great Britain and Northern Ireland (UK) is located in the north-west of Europe. It is the sixth-largest economy in the world and is considered a high-income country. Healthcare has improved significantly in the country over the last century, with public healthcare, free at the point of delivery, provided to all permanent residents since 1945. The UK spends approximately 8.4 percent of its gross domestic product on healthcare, which is half a percentage point lower than most other high-income countries.
+
+This analysis will examine life expectancy at birth among UK residents from 1922 to 2016.
+
+## Data
+
+Data are drawn from the Human Mortality Database, found at: [www.mortality.org](http://www.mortality.org). For this analysis, I use life expectancy at birth 1x10 tables for the United Kingdom.
+
+
+```{r, echo=FALSE}
+UKdata <- read.table("C:/Users/matt_/Dropbox/University of Washington/PhD/502 - Population Studies Proseminar/HW8/UKdata.txt", skip = 2, header = TRUE, stringsAsFactors = FALSE)
+
+library(ggplot2)
+
+
+```
+
+## Analysis
+### Plot - Total Life Expectancy
+
+```{r, echo=FALSE}
+ggplot(UKdata, aes(x=Year, y=Total)) +
+  geom_bar(stat = "identity")
+
+```
+
+The bar chart shows life expectancy has increased steadily from 58.58 in 1922-29 to 80.87 in 2010-16. Increases in life expectancy seemed to be larger in earlier decades than in the latter part of the 20th century.
+
+### Table - Female/Male Life Expectancy
+
+```{r, echo=FALSE}
+library(kableExtra)
+if(knitr::is_html_output()){
+  kable(head(UKdata), format = "html") %>% 
+    kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = F, position = "left")
+}
+
+le8 <- UKdata[8,]
+```
+
+The table shows life expectancy differences by gender. Females have higher life expectancy than males by 4-6 years. The differences are larger in the latter part of the twentieth century. For example, life expectancy in 1990-1999 for females was `r le8$Female` compared to `r le8$Male` for males.
+
